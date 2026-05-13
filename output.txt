@@ -1,15 +1,7 @@
-CONTAINER ID   IMAGE          COMMAND           CREATED          STATUS                      PORTS     NAMES
-94b8f977690c   413f178ff3e3   "python app.py"   36 minutes ago   Exited (0) 36 minutes ago             samplerunning
+CONTAINER ID   IMAGE           COMMAND           CREATED         STATUS                     PORTS     NAMES
+fb02961b43f4   api-lol-solis   "python app.py"   2 minutes ago   Exited (0) 2 minutes ago             samplerunning
+ID: Ahri
+Title: La Mujer Zorro de nueve Colas
+HP: 590
 
-+---------------------------------------------+
-| PERFIL DE CAMPEON: AHRI                     |
-| Titulo: La mujer zorro de nueve colas       |
-+---------------------------------------------+
-| ESTADISTICAS BASE:                         |
-|  * Ataque: 3                               |
-|  * Defensa: 4                              |
-|  * Vida: 590                               |
-+---------------------------------------------+
-
-*** DESPLIEGUE DE FRANCISCO SOLIS FINALIZADO CON EXITO ***
-
+Despliegue de Francisco Solis finalizado con exito.
