@@ -1,0 +1,15 @@
+CONTAINER ID   IMAGE           COMMAND           CREATED          STATUS                      PORTS     NAMES
+94b8f977690c   api-lol-solis   "python app.py"   16 seconds ago   Exited (0) 14 seconds ago             samplerunning
+
++---------------------------------------------+
+| PERFIL DE CAMPEON: AHRI                     |
+| Titulo: La mujer zorro de nueve colas       |
++---------------------------------------------+
+| ESTADISTICAS BASE:                         |
+|  * Ataque: 3                               |
+|  * Defensa: 4                              |
+|  * Vida: 590                               |
++---------------------------------------------+
+
+*** DESPLIEGUE DE FRANCISCO SOLIS FINALIZADO CON EXITO ***
+

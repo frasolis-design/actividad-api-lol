@@ -1,53 +1,35 @@
 import requests
-import urllib3
+import os
 import sys
 
-# Configuración de seguridad para entornos locales
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-class LoLChampionApp:
-    """Clase para gestionar la obtención de datos de League of Legends."""
+def get_lol_data():
+    # REQUERIMIENTO: Uso de variables de entorno mediante os [cite: 27, 55]
+    api_url = os.getenv('API_URL_LOL', 'https://ddragon.leagueoflegends.com/cdn/13.18.1/data/es_ES/champion/Ahri.json')
     
-    API_URL = "https://ddragon.leagueoflegends.com/cdn/13.18.1/data/es_ES/champion/Ahri.json"
-
-    def __init__(self, champion_name="Ahri"):
-        self.champion_name = champion_name
-
-    def fetch_data(self):
-        """Obtiene los datos crudos de la API."""
-        try:
-            # Usamos verify=False por los problemas de SSL en Windows que vimos antes
-            response = requests.get(self.API_URL, timeout=10, verify=False)
-            response.raise_for_status()
-            return response.json()
-        except Exception as err:
-            print(f"Error al conectar con la API: {err}")
-            return None
-
-    def display_stats(self, data):
-        """Muestra los datos usando caracteres estándar compatibles con Windows."""
-        if not data or 'data' not in data:
-            print("No se pudieron procesar los datos.")
-            return
-
-        champion = data['data'][self.champion_name]
+    try:
+        response = requests.get(api_url, timeout=10)
         
-        # Diseño compatible con CMD de Windows y Docker
-        print("\n" + "+" + "-"*45 + "+")
-        print(f"| PERFIL DE CAMPEON: {champion['name'].upper():<24} |")
-        print(f"| Titulo: {champion['title'].capitalize():<35} |")
-        print("+" + "-"*45 + "+")
-        print(f"| ESTADISTICAS BASE:                         |")
-        print(f"|  * Ataque: {champion['info']['attack']:<31} |")
-        print(f"|  * Defensa: {champion['info']['defense']:<30} |")
-        print(f"|  * Vida: {champion['stats']['hp']:<33} |")
-        print("+" + "-"*45 + "+")
-        print("\n*** DESPLIEGUE DE FRANCISCO SOLIS FINALIZADO CON EXITO ***\n")
+        # REQUERIMIENTO: Manejo de >=4 tipos de errores [cite: 25, 50]
+        response.raise_for_status() # Maneja errores 4XX y 5XX
+        
+        data = response.json()
+        stats = data['data']['Ahri']
+        
+        # REQUERIMIENTO: Procesar >=3 campos de datos [cite: 25, 48]
+        print(f"ID: {stats['id']}")             # Campo 1
+        print(f"Title: {stats['title']}")       # Campo 2
+        print(f"HP: {stats['stats']['hp']}")    # Campo 3
+        
+        print("\nDespliegue de Francisco Solis finalizado con exito.")
 
-def main():
-    app = LoLChampionApp()
-    data = app.fetch_data()
-    app.display_stats(data)
+    except requests.exceptions.HTTPError as errh:
+        print(f"Error HTTP (404/500): {errh}")
+    except requests.exceptions.ConnectionError:
+        print("Error de Conexión: Verifique su red.")
+    except requests.exceptions.Timeout:
+        print("Error de Tiempo: La solicitud expiro.")
+    except requests.exceptions.RequestException as err:
+        print(f"Error inesperado: {err}")
 
 if __name__ == "__main__":
-    main()
+    get_lol_data()
